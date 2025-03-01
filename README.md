@@ -1,79 +1,93 @@
-# Age-Calculator-OCSF
+# OCSF-AgeCalculator
 
-A client-server application that calculates a person's age in completed years based on their birth date, following the Object Client-Server Framework (OCSF) architecture.
-
-## Description
-
-This application demonstrates a simple client-server architecture where:
-- The client asks the user for their birth date
-- The server calculates the age in years
-- The result is returned to the client and displayed
-
-The implementation follows the OCSF pattern with abstract base classes that are extended by concrete implementations.
+A client-server application for calculating age based on birth date, implemented following the Object Client-Server Framework (OCSF) architecture.
 
 ## Features
 
-- Multithreaded server that can handle multiple clients simultaneously
-- Birth date validation on both client and server sides
-- Support for leap years in age calculation
-- Graceful error handling for network issues
-- Unit and integration tests
+### Server
+- Administrative menu with the following functionalities:
+  - Start/stop the server
+  - Activate/deactivate new client connections
+  - Display current server status
+- Multi-threaded design to handle multiple client connections simultaneously
+- Detailed logging of server events (client connections, requests, responses)
+- Connection management (accept/reject based on server status)
 
-## Project Structure
+### Client
+- User-friendly console menu interface
+- Connect/disconnect from server
+- Birth date input with validation
+  - Format validation (YYYY-MM-DD)
+  - Logic validation (not in future, year >= 1900)
+- Detailed status messages
+- Error handling for network issues and server disconnects
 
-- `AbstractClient.py` - Base class for client implementation with socket handling
-- `AbstractServer.py` - Base class for server implementation with threading support
-- `ConcreteClient.py` - Client application that gets user input and displays results
-- `ConcreteServer.py` - Server application that processes birth dates and calculates ages
-- `ConnectionToClient.py` - Handles individual client connections on the server
+## Architecture
+
+The application follows the OCSF architecture with:
+- Abstract base classes defining the framework (AbstractServer, AbstractClient)
+- Concrete implementations (ConcreteServer, ConcreteClient)
+- Business logic classes (Person)
+- Connection handling (ConnectionToClient)
+- Test scenarios (test_scenario.py)
+
+## Components
+
+- `AbstractServer.py` - Base server framework
+- `AbstractClient.py` - Base client framework
+- `ConcreteServer.py` - Server implementation with admin menu
+- `ConcreteClient.py` - Client implementation with user menu
+- `ConnectionToClient.py` - Manages individual client connections
 - `Person.py` - Core business logic for age calculation
-- `test_bench.py` - Comprehensive test suite
+- `test_scenario.py` - Automated test scenarios
 
-## Requirements
+## Installation & Usage
 
+### Requirements
 - Python 3.6 or higher
-- No external dependencies required (uses only standard library)
-
-## Usage
+- No external dependencies required
 
 ### Running the Server
-
 ```bash
 python ConcreteServer.py
 ```
 
-The server will start listening on port 12345. Type `quit` to stop the server.
-
 ### Running the Client
-
 ```bash
 python ConcreteClient.py
 ```
 
-Enter your birth date in the format YYYY-MM-DD when prompted.
-
-## Testing
-
-Run the comprehensive test suite with:
-
+### Running Tests
 ```bash
-python test_bench.py
+python test_scenario.py
 ```
 
-This includes unit tests for the Person and ConcreteClient classes, as well as integration tests for client-server communication.
+## Test Scenario
 
-## Class Diagram
+The application has been tested with the following scenario:
+1. Start server
+2. Activate server connections
+3. Connect client 1
+4. Connect client 2
+5. Client 1 sends invalid date
+6. Client 1 sends valid date
+7. Server responds to client 1
+8. Client 2 sends valid date
+9. Server responds to client 2
+10. Deactivate server connections
+11. Client 1 sends another valid date
+12. Server responds to client 1
+13. Client 3 attempts to connect (fails)
+14. Client 2 sends another valid date
+15. Server responds to client 2
+16. Disconnect client 1
+17. Shut down server
+18. Handle connection loss for client 2
 
-The application follows this class structure:
+## Contributing
 
-- AbstractServer (base class)
-  - ConcreteServer (implementation)
-  - ConnectionToClient (handles client connections)
-  - Person (calculates age)
-
-- AbstractClient (base class)
-  - ConcreteClient (implementation)
+This project was developed as part of a laboratory assignment for demonstrating client-server architecture and OCSF implementation.
 
 ## License
 
-MIT License
+[MIT License](LICENSE)
