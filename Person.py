@@ -15,8 +15,15 @@ class Person:
         if not self.birth_date:
             return None  # Data este invalidă
         today = datetime.today()
+
+        # Verificăm dacă data este prea în trecut (ex: înainte de 1900)
+        if self.birth_date.year < 1900:
+            return None  # Data este considerată invalidă
+
+        # Verificăm dacă data este în viitor
         if self.birth_date > today:
             return None  # Data este în viitor
+
         age = today.year - self.birth_date.year
         if (today.month, today.day) < (self.birth_date.month, self.birth_date.day):
             age -= 1

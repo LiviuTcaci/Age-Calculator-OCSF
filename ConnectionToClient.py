@@ -30,8 +30,14 @@ class ConnectionToClient(threading.Thread):
             self.stop()
 
     def stop(self):
+        """Închide conexiunea cu clientul."""
         if self.running:
             self.running = False
-            self.client_socket.close()
+            try:
+                self.client_socket.close()
+            except Exception as e:
+                print(f"Eroare la închiderea conexiunii cu clientul {self.client_address}: {e}")
             print(f"Client deconectat: {self.client_address}")
-
+            # Eliminăm clientul din lista serverului
+            if self in self.server.clients:
+                self.server.clients.remove(self)
